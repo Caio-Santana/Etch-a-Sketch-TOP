@@ -13,10 +13,19 @@ let changeColor = true;
 
 const container = document.getElementById("container");
 const newGridBtn = document.getElementById("new-grid-btn");
+const newColorBtn = document.getElementById("new-color-btn");
+const resetBtn = document.getElementById("reset-btn");
 
 newGridBtn.addEventListener("click", userGrid);
+newColorBtn.addEventListener("click", randomRGB);
+resetBtn.addEventListener("click", resetGrid);
 
 window.addEventListener("mouseover", (event) => hoverEffect(event));
+
+function resetGrid() {
+  const listDiv = document.querySelectorAll(".square");
+  listDiv.forEach((div) => (div.style.backgroundColor = "white"));
+}
 
 function clearGrid() {
   const listDiv = document.querySelectorAll(".square");
@@ -33,7 +42,7 @@ function createGrid(size) {
     const squareDiv = document.createElement("div");
     squareDiv.classList.add("square");
 
-    squareDiv.style.backgroundColor = 'white';
+    squareDiv.style.backgroundColor = "white";
     squareDiv.style.width = `${gridWidthPx / size}px`;
     squareDiv.style.height = `${gridWidthPx / size}px`;
 
@@ -78,9 +87,7 @@ function hoverEffect(event) {
   if (isSquare) {
     const bgColor = div.style.getPropertyValue("background-color");
     if (rainbowEffect) {
-      r = randomColor();
-      g = randomColor();
-      b = randomColor();
+      randomRGB();
     }
     if (bgColor === "" || changeColor) {
       div.style.backgroundColor = `rgb(${r},${g},${b})`;
@@ -91,6 +98,12 @@ function hoverEffect(event) {
 function randomColor() {
   const color = Math.floor(Math.random() * 256);
   return color;
+}
+
+function randomRGB() {
+  r = randomColor();
+  g = randomColor();
+  b = randomColor();
 }
 
 createGrid(defaultSize);
